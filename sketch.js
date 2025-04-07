@@ -71,6 +71,8 @@ function runTrial() {
 
 function drawMarkerAt(timeMs) {
   let x = map(timeMs, 0, unpredictableRange[1], 50, width - 50);
+  stroke(255);       // Set stroke to white
+  strokeWeight(2);   // Optional: makes the line thicker
   line(x, 50, x, 100);
 }
 
