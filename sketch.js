@@ -19,6 +19,14 @@ let intertrialStart = 0;
 let currentITI = 0;
 let barTurnedRed = false;
 
+// Generate or grab participant ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+let participantID = urlParams.get('pid') || generateParticipantID();
+
+function generateParticipantID() {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
 function setup() {
   const canvasWidth = windowWidth * 0.8;
   const canvasHeight = windowHeight * 0.2;
@@ -170,12 +178,14 @@ function sendDataToGoogleSheet(entry) {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(entry)
+    body: JSON.stringify({
+      participantID: participantID,
+      ...entry
+    })
   })
   .then(() => console.log("Data sent to Google Sheet"))
   .catch(err => console.error("Error sending data:", err));
 }
-
 function showEndScreen() {
   background(220);
   textAlign(CENTER, CENTER);
