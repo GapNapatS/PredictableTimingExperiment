@@ -192,6 +192,6 @@ function showEndScreen() {
   background(220);
   textAlign(CENTER, CENTER);
   textSize(24);
-  fill(255); // white text
+  fill(0); // white text
   text("Experiment over.\nThank you for participating!", width / 2, height / 2);
 }
