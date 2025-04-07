@@ -32,7 +32,7 @@ function windowResized() {
 }
 
 function draw() {
-  background(220);
+  background(0);
   if (trialRunning) runTrial();
   else runIntertrialInterval();
 }
@@ -142,6 +142,7 @@ function nextTrial() {
     if (currentConditionIndex >= conditions.length) {
       noLoop();
       console.log("All trials complete!");
+      showEndScreen();
       return;
     }
   }
@@ -173,4 +174,12 @@ function sendDataToGoogleSheet(entry) {
   })
   .then(() => console.log("Data sent to Google Sheet"))
   .catch(err => console.error("Error sending data:", err));
+}
+
+function showEndScreen() {
+  background(220);
+  textAlign(CENTER, CENTER);
+  textSize(24);
+  fill(255); // white text
+  text("Experiment over.\nThank you for participating!", width / 2, height / 2);
 }
