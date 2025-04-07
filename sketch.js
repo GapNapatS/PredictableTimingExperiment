@@ -93,10 +93,19 @@ function startTrial() {
 function endTrial(rt) {
   trialRunning = false;
 
-  results.push({
+    const rtVal = typeof rt === "number" ? Number(rt) : null;
+
+  const entry = {
     condition: currentCondition(),
     targetTime: targetTime,
-    reactionTime: typeof rt === "number" ? rt.toFixed(0) : "No response"
+    reactionTime: rtVal,
+  };
+
+  sendDataToGoogleSheet(entry);
+
+  results.push({
+    ...entry,
+    reactionTime: rtVal !== null ? rtVal.toFixed(0) : "No response"
   });
 
   console.log(`Trial ended. RT: ${rt}`);
@@ -133,7 +142,6 @@ function nextTrial() {
     if (currentConditionIndex >= conditions.length) {
       noLoop();
       console.log("All trials complete!");
-      downloadResultsAsCSV();
       return;
     }
   }
@@ -152,4 +160,17 @@ function downloadResultsAsCSV() {
   a.attribute('download', 'results.csv');
   a.hide();
   a.elt.click();
+}
+
+function sendDataToGoogleSheet(entry) {
+  fetch("https://script.google.com/macros/s/AKfycbzY9jacf4Xej2NPV0dYIbxGno9LZGN_trMoPpNFQnn1kNZGMFhVvi7NTKCh5PnUvm-g/exec", {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(entry)
+  })
+  .then(() => console.log("Data sent to Google Sheet"))
+  .catch(err => console.error("Error sending data:", err));
 }
