@@ -40,7 +40,7 @@ function windowResized() {
 }
 
 function draw() {
-  background(0);
+  background(200);
   if (trialRunning) runTrial();
   else runIntertrialInterval();
 }
