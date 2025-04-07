@@ -58,7 +58,7 @@ function runTrial() {
     barWidth = map(elapsed, 0, unpredictableRange[1], 0, width - 100);
     fill(elapsed >= targetTime ? 'red' : 255);
     rect(50, 60, barWidth, 30);
-    stroke(0);
+    stroke(255);
     if (currentCondition() === "predictable") {
       drawMarkerAt(predictableTime);
     } else if (currentCondition() === "semi-predictable") {
